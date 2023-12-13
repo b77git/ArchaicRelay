@@ -1,11 +1,19 @@
 package com.archaic.ArchaicRelay.Listeners;
 
+import com.archaic.ArchaicRelay.Discord.Bot;
+import com.archaic.ArchaicRelay.Discord.WebhookManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class onKill {
+    private final WebhookManager webhookManager;
+
+    public onKill(WebhookManager webhookManager) {
+        this.webhookManager = webhookManager;
+    }
+
     @SubscribeEvent
     public void onPlayerDeath(LivingDeathEvent event) {
         if (event.getEntityLiving() instanceof EntityPlayer) {

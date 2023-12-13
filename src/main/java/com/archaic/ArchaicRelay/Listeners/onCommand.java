@@ -1,9 +1,16 @@
 package com.archaic.ArchaicRelay.Listeners;
 
+import com.archaic.ArchaicRelay.Discord.Bot;
+import com.archaic.ArchaicRelay.Discord.WebhookManager;
 import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class onCommand {
+    private final WebhookManager webhookManager;
+
+    public onCommand(WebhookManager webhookManager) {
+        this.webhookManager = webhookManager;
+    }
     // Event handler for command events
     @SubscribeEvent
     public void onCommand(CommandEvent event) {
