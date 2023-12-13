@@ -5,8 +5,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
-import java.util.Map;
-
 public class Bot {
     private final JDA api;
     private final ChannelManager channelManager;
@@ -26,9 +24,8 @@ public class Bot {
 
             startupMessage.sendStartMessage();
         } catch (InterruptedException e) {
-            // Handle the exception as needed
             ArchaicRelay.getLogger().error("Error starting the bot: " + e.getMessage());
-            Thread.currentThread().interrupt(); // Preserve the interrupted status
+            Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
     }

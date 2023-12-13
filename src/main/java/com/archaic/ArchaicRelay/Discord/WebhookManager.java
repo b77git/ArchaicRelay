@@ -54,7 +54,6 @@ public class WebhookManager {
         return webhookUrls;
     }
 
-    // You can add a method to send a message using a specific webhook URL
     public void sendMessage(String message, String name) {
         for (String channelId : gameChannelIds) {
             String cleanedChannelId = channelId.trim().replaceAll(",", "");

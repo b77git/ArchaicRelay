@@ -1,6 +1,5 @@
 package com.archaic.ArchaicRelay.Listeners;
 
-import com.archaic.ArchaicRelay.Discord.Bot;
 import com.archaic.ArchaicRelay.Discord.WebhookManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

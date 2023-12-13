@@ -1,7 +1,6 @@
 package com.archaic.ArchaicRelay.Discord;
 
 import com.archaic.ArchaicRelay.ArchaicRelay;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
@@ -28,7 +27,6 @@ public class StartupMessage {
 
     public void editStartMessage(){
         for (Message startingMessage : startingMessages) {
-            // Ensure that startingMessage is not null before attempting to edit
             if (startingMessage != null) {
                 startingMessage.editMessage("Server Started!").queue();
             }

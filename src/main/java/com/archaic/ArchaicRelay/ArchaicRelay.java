@@ -12,12 +12,10 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
-import net.minecraftforge.fml.common.network.NetworkCheckHandler;
-import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.File;
-import java.util.Map;
 
 
 @Mod(modid = ArchaicRelay.MODID, name = ArchaicRelay.MODNAME, version = ArchaicRelay.MODVERSION, serverSideOnly = true, acceptableRemoteVersions = "*")
@@ -45,26 +43,24 @@ public class ArchaicRelay {
         File configFile = new File(configDir, "ArchaicRelay.cfg");
         Configuration config = new Configuration(configFile);
 
-        // Log the paths for debugging
         logger.info("Config directory: " + configDir.getAbsolutePath());
         logger.info("Config file: " + configFile.getAbsolutePath());
         configHandler = new ConfigHandler(config, logger);
 
         if (config.hasChanged()) {
             logger.info("Config has changed; saving...");
-            config.save(); // Save changes if any
+            config.save();
             logger.info("Config saved.");
         } else {
             logger.info("No changes detected in the configuration.");
         }
 
-        // Log the loaded values for debugging
         logger.info("Bot token: " + configHandler.botToken);
         logger.info("Game channel IDs: " + configHandler.gameChannelIds);
 
         if (bot == null) {
             bot = new Bot();
-            // Register listeners only if the bot is newly created
+
             bot.getJDA().addEventListener(new onDiscordMessage(bot));
             WebhookManager webhookManager = bot.getWebhookManager();
             EmbedManager embedManager = bot.getEmbedManager();

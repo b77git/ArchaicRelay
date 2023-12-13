@@ -1,8 +1,6 @@
 package com.archaic.ArchaicRelay.Listeners;
 
-import com.archaic.ArchaicRelay.Discord.Bot;
 import com.archaic.ArchaicRelay.Discord.EmbedManager;
-import com.archaic.ArchaicRelay.Discord.WebhookManager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
