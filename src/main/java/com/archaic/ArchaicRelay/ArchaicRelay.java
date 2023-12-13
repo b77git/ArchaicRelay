@@ -2,6 +2,7 @@ package com.archaic.ArchaicRelay;
 
 import com.archaic.ArchaicRelay.Config.ConfigHandler;
 import com.archaic.ArchaicRelay.Discord.Bot;
+import com.archaic.ArchaicRelay.Discord.EmbedManager;
 import com.archaic.ArchaicRelay.Discord.WebhookManager;
 import com.archaic.ArchaicRelay.Listeners.*;
 import net.minecraftforge.common.MinecraftForge;
@@ -64,12 +65,14 @@ public class ArchaicRelay {
         if (bot == null) {
             bot = new Bot();
             // Register listeners only if the bot is newly created
+            bot.getJDA().addEventListener(new onDiscordMessage(bot));
             WebhookManager webhookManager = bot.getWebhookManager();
+            EmbedManager embedManager = bot.getEmbedManager();
             MinecraftForge.EVENT_BUS.register(new onChat(webhookManager));
             MinecraftForge.EVENT_BUS.register(new onCommand(webhookManager));
             MinecraftForge.EVENT_BUS.register(new onDeath(webhookManager));
-            MinecraftForge.EVENT_BUS.register(new onJoin(webhookManager));
-            MinecraftForge.EVENT_BUS.register(new onLeave(webhookManager));
+            MinecraftForge.EVENT_BUS.register(new onJoin(embedManager));
+            MinecraftForge.EVENT_BUS.register(new onLeave(embedManager));
             MinecraftForge.EVENT_BUS.register(new onKill(webhookManager));
         }
     }

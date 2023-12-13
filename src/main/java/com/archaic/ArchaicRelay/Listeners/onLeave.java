@@ -1,22 +1,24 @@
 package com.archaic.ArchaicRelay.Listeners;
 
 import com.archaic.ArchaicRelay.Discord.Bot;
+import com.archaic.ArchaicRelay.Discord.EmbedManager;
 import com.archaic.ArchaicRelay.Discord.WebhookManager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
-public class onLeave {
-    private final WebhookManager webhookManager;
+import java.awt.*;
 
-    public onLeave(WebhookManager webhookManager) {
-        this.webhookManager = webhookManager;
+public class onLeave {
+    private final EmbedManager embedManager;
+
+    public onLeave(EmbedManager embedManager) {
+        this.embedManager = embedManager;
     }
 
     @SubscribeEvent
     public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
-        // Do something when a player leaves
         String playerName = event.player.getName();
-//        bot.getEmbedManager().sendLeaveEmbed(playerName);
+        embedManager.sendEmbed(playerName + " has left the server!", Color.RED);
     }
 }
 

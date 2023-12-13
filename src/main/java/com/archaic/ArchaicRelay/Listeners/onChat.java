@@ -16,7 +16,6 @@ public class onChat {
     public void onServerChat(ServerChatEvent event) {
         String playerName = event.getUsername();
         String message = event.getMessage();
-
-        System.out.println(playerName + " said: " + message);
+        webhookManager.sendMessage(message, playerName);
     }
 }

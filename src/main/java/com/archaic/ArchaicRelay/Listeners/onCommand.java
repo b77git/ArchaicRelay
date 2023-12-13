@@ -21,7 +21,8 @@ public class onCommand {
         // Check if the command is "/say" or "/me"
         if (commandName.equals("say") || commandName.equals("me")) {
             // Do something with the command
-            System.out.println(commandSender + " executed /" + commandName + " with args: " + String.join(" ", commandArgs));
+            String commandOutput = String.join(" ", commandArgs);
+            webhookManager.sendMessage(commandOutput);
         }
     }
 }

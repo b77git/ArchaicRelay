@@ -45,13 +45,14 @@ public class ChannelManager {
             synchronized (this) {
                 gameChannels = channels;
                 webhookManager.getWebhookUrls().clear();
-                webhookManager.getWebhookUrls().putAll(webhookManager.createWebhooks()); // Move webhook creation here
+                webhookManager.getWebhookUrls().putAll(webhookManager.createWebhooks());
             }
         } catch (InterruptedException e) {
             ArchaicRelay.getLogger().error("Error setting game channels: " + e.getMessage());
             Thread.currentThread().interrupt();
         }
     }
+
 
     public List<TextChannel> getGameChannels() {
         return gameChannels;

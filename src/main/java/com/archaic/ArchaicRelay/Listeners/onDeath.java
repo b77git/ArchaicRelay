@@ -18,7 +18,7 @@ public class onDeath {
             // A player has died
             net.minecraft.entity.player.EntityPlayer player = (net.minecraft.entity.player.EntityPlayer) event.getEntityLiving();
             // Do something with the player's death
-            System.out.println("Player " + player.getName() + " has died!");
+//            System.out.println("Player " + player.getName() + " has died!");
         }
     }
 }

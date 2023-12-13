@@ -19,16 +19,17 @@ public class onKill {
         if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer killedPlayer = (EntityPlayer) event.getEntityLiving();
 
-            // Check if there's a killer
             EntityLivingBase killer = event.getSource().getTrueSource() instanceof EntityLivingBase
                     ? (EntityLivingBase) event.getSource().getTrueSource()
                     : null;
 
-            // Do something with the killed player and the killer
             String killedPlayerName = killedPlayer.getName();
             String killerName = killer != null ? killer.getName() : "Unknown";
-
-            System.out.println("Player " + killedPlayerName + " has been killed by " + killerName + "!");
+            if (!killerName.equals("Unknown")) {
+                webhookManager.sendMessage("Player " + killedPlayerName + " has been killed by " + killerName + "!");
+            } else {
+                webhookManager.sendMessage("Player " + killedPlayerName + " has died!");
+            }
         }
     }
 }
