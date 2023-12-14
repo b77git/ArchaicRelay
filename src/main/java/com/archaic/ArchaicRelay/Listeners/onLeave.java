@@ -1,5 +1,6 @@
 package com.archaic.ArchaicRelay.Listeners;
 
+import com.archaic.ArchaicRelay.ArchaicRelay;
 import com.archaic.ArchaicRelay.Discord.EmbedManager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -16,7 +17,8 @@ public class onLeave {
     @SubscribeEvent
     public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
         String playerName = event.player.getName();
-        embedManager.sendEmbed(playerName + " has left the server!", Color.RED);
+        String message = ArchaicRelay.getModConfig().leaveMessage.replaceAll("\\{user}", playerName);
+        embedManager.sendEmbed(message, Color.RED);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.archaic.ArchaicRelay.Listeners;
 
+import com.archaic.ArchaicRelay.ArchaicRelay;
 import com.archaic.ArchaicRelay.Discord.EmbedManager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -16,6 +17,7 @@ public class onJoin {
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
         String playerName = event.player.getName();
-        embedManager.sendEmbed(playerName + " has joined the server!", Color.GREEN);
+        String message = ArchaicRelay.getModConfig().joinMessage.replaceAll("\\{user}", playerName);
+        embedManager.sendEmbed(message, Color.GREEN);
     }
 }
