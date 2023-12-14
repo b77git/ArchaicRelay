@@ -11,7 +11,7 @@ public class Bot {
     private ChannelManager channelManager;
     private WebhookManager webhookManager;
     private EmbedManager embedManager;
-    StartupMessage startupMessage = new StartupMessage(this);
+    ServerStatusMessage serverStatusMessage = new ServerStatusMessage(this);
 
     public Bot() {
         try {
@@ -24,7 +24,7 @@ public class Bot {
             this.embedManager = new EmbedManager(this);
             api.awaitReady();
 
-            startupMessage.sendStartMessage();
+            serverStatusMessage.sendStartMessage();
         } catch (InvalidTokenException e) {
             ArchaicRelay.getLogger().error("Invalid bot token: " + e.getMessage());
 
@@ -51,8 +51,8 @@ public class Bot {
         return embedManager;
     }
 
-    public StartupMessage getStartupMessage() {
-        return startupMessage;
+    public ServerStatusMessage getServerStatusMessage() {
+        return serverStatusMessage;
     }
 
 }

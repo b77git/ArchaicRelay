@@ -74,12 +74,17 @@ public class ArchaicRelay {
 
     @EventHandler
     private void onServerStop(FMLServerStoppedEvent event){
+        try {
+            bot.getServerStatusMessage().sendStopMessage();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         configHandler.saveConfig();
     }
 
     @EventHandler
     private void onServerStart(FMLServerStartedEvent event){
-        bot.getStartupMessage().editStartMessage();
+        bot.getServerStatusMessage().editStartMessage();
     }
 
     public static ConfigHandler getModConfig() {

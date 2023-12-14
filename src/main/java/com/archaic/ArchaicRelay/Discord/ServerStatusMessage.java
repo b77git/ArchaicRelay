@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class StartupMessage {
+public class ServerStatusMessage {
     private final Bot bot;
     private final List<Message> startingMessages;
 
-    public StartupMessage(Bot bot) {
+    public ServerStatusMessage(Bot bot) {
         this.bot = bot;
         this.startingMessages = new ArrayList<>();
     }
@@ -20,7 +20,7 @@ public class StartupMessage {
     public void sendStartMessage() throws InterruptedException {
         for (TextChannel gameChannel : bot.getChannelManager().getGameChannels()) {
             ArchaicRelay.getLogger().info("Sending starting message to " + gameChannel.getName());
-            Message startingMessage = gameChannel.sendMessage("Server Starting...").complete();
+            Message startingMessage = gameChannel.sendMessage(ArchaicRelay.getModConfig().startingMessage).complete();
             startingMessages.add(startingMessage);
         }
     }
@@ -28,8 +28,16 @@ public class StartupMessage {
     public void editStartMessage(){
         for (Message startingMessage : startingMessages) {
             if (startingMessage != null) {
-                startingMessage.editMessage("Server Started!").queue();
+                startingMessage.editMessage(ArchaicRelay.getModConfig().startedMessage).queue();
             }
+        }
+    }
+
+    public void sendStopMessage() throws InterruptedException {
+        for (TextChannel gameChannel : bot.getChannelManager().getGameChannels()) {
+            ArchaicRelay.getLogger().info("Sending stopped message to " + gameChannel.getName());
+            Message startingMessage = gameChannel.sendMessage(ArchaicRelay.getModConfig().stoppedMessage).complete();
+            startingMessages.add(startingMessage);
         }
     }
 }

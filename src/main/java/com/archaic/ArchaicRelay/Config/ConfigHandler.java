@@ -15,6 +15,9 @@ public class ConfigHandler {
     public List<String> gameChannelIds;
     public String joinMessage;
     public String leaveMessage;
+    public String startingMessage;
+    public String startedMessage;
+    public String stoppedMessage;
 
     public ConfigHandler(Configuration config, Logger logger) {
         this.config = config;
@@ -40,6 +43,15 @@ public class ConfigHandler {
         leaveMessage = config.getString("LeaveMessage", Configuration.CATEGORY_GENERAL, "{user} has left the server!",
                 "The message that will be send when a user leaves the server");
 
+        startingMessage = config.getString("StartingMessage", Configuration.CATEGORY_GENERAL, "Server starting...",
+                "The message that will be send when the server is starting");
+
+        startedMessage = config.getString("StartedMessage", Configuration.CATEGORY_GENERAL, "Server started!",
+                "The message that will be send when the server starts");
+
+        stoppedMessage = config.getString("StoppedMessage", Configuration.CATEGORY_GENERAL, "Server stopped...",
+                "The message that will be send when a server stops");
+
         logger.info("Your bot token is " + botToken);
 
         if (config.hasChanged()) {
@@ -55,6 +67,9 @@ public class ConfigHandler {
         config.get(Configuration.CATEGORY_GENERAL, "gameChannelIds", new String[]{"123456789"}).set(gameChannelIds.toArray(new String[0]));
         config.get(Configuration.CATEGORY_GENERAL, "JoinMessage", "{user} has joined the server!").set(joinMessage);
         config.get(Configuration.CATEGORY_GENERAL, "LeaveMessage", "{user} has left the server!").set(leaveMessage);
+        config.get(Configuration.CATEGORY_GENERAL, "StartingMessage", "Server starting...").set(joinMessage);
+        config.get(Configuration.CATEGORY_GENERAL, "StartedMessage", "Server started!").set(leaveMessage);
+        config.get(Configuration.CATEGORY_GENERAL, "StoppedMessage", "Server stopped...").set(joinMessage);
 
         // Save the configuration
         if (config.hasChanged()) {
