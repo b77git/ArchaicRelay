@@ -4,6 +4,7 @@ import club.minnced.discord.webhook.WebhookClient;
 import club.minnced.discord.webhook.WebhookClientBuilder;
 import club.minnced.discord.webhook.send.WebhookMessageBuilder;
 import com.archaic.ArchaicRelay.ArchaicRelay;
+import net.dv8tion.jda.api.entities.Webhook;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 public class WebhookManager {
     private final Map<String, String> webhookUrls;
+    private Map<String, Webhook> webhooks = new HashMap<>();
     private final Bot bot;
     private final List<String> gameChannelIds;
 
@@ -25,27 +27,43 @@ public class WebhookManager {
         Map<String, String> result = new HashMap<>();
 
         for (String channelId : gameChannelIds) {
-            ArchaicRelay.getLogger().info(channelId);
             String cleanedChannelId = channelId.trim().replaceAll(",", "");
-            String webhookUrl = result.getOrDefault(cleanedChannelId, createWebhook(cleanedChannelId));
+            String webhookUrl = result.getOrDefault(cleanedChannelId, getOrCreateWebhook(cleanedChannelId));
             result.put(cleanedChannelId, webhookUrl);
         }
 
         return result;
     }
 
-    private String createWebhook(String channelId) {
+    private String getOrCreateWebhook(String channelId) {
         String cleanedChannelId = channelId.trim().replaceAll(",", "");
+
+        if (webhooks.containsKey(cleanedChannelId)) {
+            Webhook existingWebhook = webhooks.get(cleanedChannelId);
+            ArchaicRelay.getLogger().info("Webhook already exists for channel " + cleanedChannelId + ". URL: " + existingWebhook.getUrl());
+            return existingWebhook.getUrl();
+        }
+
         try {
             TextChannel textChannel = bot.getJDA().getTextChannelById(cleanedChannelId);
             if (textChannel != null) {
-                return textChannel.createWebhook("ArchaicRelayWebhook-" + textChannel.getName()).complete().getUrl();
+                Webhook webhook = textChannel.retrieveWebhooks().complete().stream()
+                        .filter(existingWebhook -> existingWebhook.getName().equals("ArchaicRelayWebhook-" + textChannel.getName()))
+                        .findFirst()
+                        .orElseGet(() -> {
+                            ArchaicRelay.getLogger().info("Creating new webhook for channel " + cleanedChannelId);
+                            return textChannel.createWebhook("ArchaicRelayWebhook-" + textChannel.getName()).complete();
+                        });
+
+                webhooks.put(cleanedChannelId, webhook);
+
+                return webhook.getUrl();
             } else {
                 ArchaicRelay.getLogger().warn("Game channel with ID " + cleanedChannelId + " not found.");
                 return "";
             }
         } catch (Exception e) {
-            ArchaicRelay.getLogger().error("Error creating webhook for channel " + cleanedChannelId + ": " + e.getMessage());
+            ArchaicRelay.getLogger().error("Error creating/getting webhook for channel " + cleanedChannelId + ": " + e.getMessage());
             return "";
         }
     }

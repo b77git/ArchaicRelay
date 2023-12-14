@@ -10,7 +10,14 @@ public class ConfigHandler {
     private Configuration config;
     private Logger logger;
 
-    // Config options
+    private static final String DEFAULT_BOT_TOKEN = "your_default_token";
+    private static final String[] DEFAULT_CHANNEL_IDS = {"123456789"};
+    private static final String DEFAULT_JOIN_MESSAGE = "{user} has joined the server!";
+    private static final String DEFAULT_LEAVE_MESSAGE = "{user} has left the server!";
+    private static final String DEFAULT_STARTING_MESSAGE = "Server starting...";
+    private static final String DEFAULT_STARTED_MESSAGE = "Server started!";
+    private static final String DEFAULT_STOPPED_MESSAGE = "Server stopped...";
+
     public String botToken;
     public List<String> gameChannelIds;
     public String joinMessage;
@@ -30,48 +37,45 @@ public class ConfigHandler {
     private void loadConfig() {
         logger.info("Loading configuration file...");
 
-        // Read config values
-        botToken = config.getString("BotToken", Configuration.CATEGORY_GENERAL, "your_default_token",
+        botToken = config.getString("BotToken", Configuration.CATEGORY_GENERAL, DEFAULT_BOT_TOKEN,
                 "The token for your Discord bot");
 
         gameChannelIds = Arrays.asList(config.getStringList("gameChannelIds", Configuration.CATEGORY_GENERAL,
-                new String[]{"123456789"}, "The Channel Ids of where the Discord bot will output the game information"));
+                DEFAULT_CHANNEL_IDS, "The Channel Ids of where the Discord bot will output the game information"));
 
-        joinMessage = config.getString("JoinMessage", Configuration.CATEGORY_GENERAL, "{user} has joined the server!",
-                "The message that will be send when a user joins the server");
+        joinMessage = config.getString("JoinMessage", Configuration.CATEGORY_GENERAL, DEFAULT_JOIN_MESSAGE,
+                "The message that will be sent when a user joins the server");
 
-        leaveMessage = config.getString("LeaveMessage", Configuration.CATEGORY_GENERAL, "{user} has left the server!",
-                "The message that will be send when a user leaves the server");
+        leaveMessage = config.getString("LeaveMessage", Configuration.CATEGORY_GENERAL, DEFAULT_LEAVE_MESSAGE,
+                "The message that will be sent when a user leaves the server");
 
-        startingMessage = config.getString("StartingMessage", Configuration.CATEGORY_GENERAL, "Server starting...",
-                "The message that will be send when the server is starting");
+        startingMessage = config.getString("StartingMessage", Configuration.CATEGORY_GENERAL, DEFAULT_STARTING_MESSAGE,
+                "The message that will be sent when the server is starting");
 
-        startedMessage = config.getString("StartedMessage", Configuration.CATEGORY_GENERAL, "Server started!",
-                "The message that will be send when the server starts");
+        startedMessage = config.getString("StartedMessage", Configuration.CATEGORY_GENERAL, DEFAULT_STARTED_MESSAGE,
+                "The message that will be sent when the server starts");
 
-        stoppedMessage = config.getString("StoppedMessage", Configuration.CATEGORY_GENERAL, "Server stopped...",
-                "The message that will be send when a server stops");
+        stoppedMessage = config.getString("StoppedMessage", Configuration.CATEGORY_GENERAL, DEFAULT_STOPPED_MESSAGE,
+                "The message that will be sent when a server stops");
 
         logger.info("Your bot token is " + botToken);
 
         if (config.hasChanged()) {
-            config.save(); // Save changes if any
+            config.save();
         }
     }
 
     public void saveConfig() {
         logger.info("Saving configuration file...");
 
-        // Set values in the configuration
-        config.get(Configuration.CATEGORY_GENERAL, "BotToken", "your_default_token").set(botToken);
-        config.get(Configuration.CATEGORY_GENERAL, "gameChannelIds", new String[]{"123456789"}).set(gameChannelIds.toArray(new String[0]));
-        config.get(Configuration.CATEGORY_GENERAL, "JoinMessage", "{user} has joined the server!").set(joinMessage);
-        config.get(Configuration.CATEGORY_GENERAL, "LeaveMessage", "{user} has left the server!").set(leaveMessage);
-        config.get(Configuration.CATEGORY_GENERAL, "StartingMessage", "Server starting...").set(joinMessage);
-        config.get(Configuration.CATEGORY_GENERAL, "StartedMessage", "Server started!").set(leaveMessage);
-        config.get(Configuration.CATEGORY_GENERAL, "StoppedMessage", "Server stopped...").set(joinMessage);
+        config.get(Configuration.CATEGORY_GENERAL, "BotToken", DEFAULT_BOT_TOKEN).set(botToken);
+        config.get(Configuration.CATEGORY_GENERAL, "gameChannelIds", DEFAULT_CHANNEL_IDS).set(gameChannelIds.toArray(new String[0]));
+        config.get(Configuration.CATEGORY_GENERAL, "JoinMessage", DEFAULT_JOIN_MESSAGE).set(joinMessage);
+        config.get(Configuration.CATEGORY_GENERAL, "LeaveMessage", DEFAULT_LEAVE_MESSAGE).set(leaveMessage);
+        config.get(Configuration.CATEGORY_GENERAL, "StartingMessage", DEFAULT_STARTING_MESSAGE).set(startingMessage);
+        config.get(Configuration.CATEGORY_GENERAL, "StartedMessage", DEFAULT_STARTED_MESSAGE).set(startedMessage);
+        config.get(Configuration.CATEGORY_GENERAL, "StoppedMessage", DEFAULT_STOPPED_MESSAGE).set(stoppedMessage);
 
-        // Save the configuration
         if (config.hasChanged()) {
             config.save();
         }
