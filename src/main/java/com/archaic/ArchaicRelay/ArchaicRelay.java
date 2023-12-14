@@ -58,9 +58,8 @@ public class ArchaicRelay {
         logger.info("Bot token: " + configHandler.botToken);
         logger.info("Game channel IDs: " + configHandler.gameChannelIds);
 
-        if (bot == null) {
-            bot = new Bot();
-
+        bot = new Bot();
+        if (bot.getJDA() != null) {
             bot.getJDA().addEventListener(new onDiscordMessage(bot));
             WebhookManager webhookManager = bot.getWebhookManager();
             EmbedManager embedManager = bot.getEmbedManager();

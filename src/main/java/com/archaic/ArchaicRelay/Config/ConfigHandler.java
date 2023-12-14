@@ -3,7 +3,6 @@ package com.archaic.ArchaicRelay.Config;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +18,6 @@ public class ConfigHandler {
         this.config = config;
         this.logger = logger;
 
-        // Load the configuration file
         config.load();
         loadConfig();
     }
