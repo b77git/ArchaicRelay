@@ -94,7 +94,7 @@ public class WebhookManager {
             if (webhookUrl != null) {
                 WebhookClient webhookClient = new WebhookClientBuilder(webhookUrl).build();
                 WebhookMessageBuilder messageBuilder = new WebhookMessageBuilder();
-                messageBuilder.setAvatarUrl("https://i.postimg.cc/13VFYXDf/pngtree-background-shadow-vector-cartoon-server-png-image-4093223-removebg-preview.png")
+                messageBuilder.setAvatarUrl("https://i.postimg.cc/nVd2Xz4L/pngtree-background-shadow-vector-cartoon-server-png-image-4093223-removebg-preview.png")
                         .setUsername("Server")
                         .setContent(message);
                 webhookClient.send(messageBuilder.build());
